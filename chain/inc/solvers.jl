@@ -5,14 +5,6 @@ using Cubature;
 
 macro update_user(code)
   return quote
-    # give user an update
-    global _NUMEVALS_;
-    global _ITERS_PER_PRINT_;
-    global verbose;
-    _NUMEVALS_ += 1;
-    if (verbose && (_NUMEVALS_ % _ITERS_PER_PRINT_ == 0))
-      $code
-    end
   end
 end
 
@@ -213,12 +205,6 @@ function newton_raphson(xs::Vector; reltol::Real=1e-10, abstol::Real=1e-8, max_i
       return (xs, current_residuals, true, iter);
     end
 
-    @update_user(begin
-      global _NUMEVALS_;
-      println("Newton iterations: $_NUMEVALS_");
-      println("    current residuals: ", current_residuals);
-      println("    Is: ", [Is[1][1], Is[2][1], Is[3][1]]);
-    end);
   end
 
   return (xs, current_residuals, false, iter);
@@ -296,14 +282,6 @@ function simulated_annealing(xs::Vector; anneal_factor::Real=1e-3,
       
     end
    
-    @update_user(begin
-      global _NUMEVALS_;
-      println("Simulated annealing iterations: $_NUMEVALS_");
-      println("    current residuals: ", current_residuals);
-      println("    Is: ", [Is[1][1], Is[2][1], Is[3][1]]);
-      println("    T: ", T);
-      println("    delta: ", delta);
-    end);
   end
 
   return (xs, current_residuals, false, iter);
@@ -332,13 +310,6 @@ function NLopt_optimization_function!(xs::Vector, grad::Vector)
     h = hessian(xs);
     grad = vec(transpose(current_residuals) * h);
   end
-
-  @update_user(begin
-    global _NUMEVALS_;
-    println("Optimization iterations: $_NUMEVALS_");
-    println("    current residuals: ", current_residuals);
-    println("    Is: ", [Is[1][1], Is[2][1], Is[3][1]]);
-  end);
 
   return 0.5 * dot(current_residuals, current_residuals);
 end

@@ -103,6 +103,7 @@ const dk = pa["dk"];
 const E0 = pa["E0"];
 const ω0 = dk * E0*E0; 
 const _u0_ = (dk > 0) ? -dk*(E0^2) : 0.0; 
+const γ = NaN;
 const γz = pa["gz"];
 const γx = pa["gx"];
 const kT = pa["kT"];
