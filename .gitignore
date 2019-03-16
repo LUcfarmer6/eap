@@ -1,3 +1,6 @@
 chain/data/*
 network/data/*
 */data/*
+*.png
+*.pdf
+*.jpg
